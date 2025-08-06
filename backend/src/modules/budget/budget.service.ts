@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { CreateBudgetUseCase } from './use-cases/create-budget.use-case';
 
 @Injectable()
 export class BudgetService {
+  constructor(private readonly createBudgetUseCase: CreateBudgetUseCase) {}
   create(createBudgetDto: CreateBudgetDto) {
-    return 'This action adds a new budget';
+    return this.createBudgetUseCase.execute(createBudgetDto);
   }
 
   findAll() {
