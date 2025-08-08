@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { BudgetEntity } from '../entities/budget.entity';
+import { validate as isUUID } from 'uuid';
 
 @Injectable()
 export class BudgetExistsGuard implements CanActivate {
@@ -18,6 +19,11 @@ export class BudgetExistsGuard implements CanActivate {
 
     if (!budgetId) {
       throw new BadRequestException('Budget ID is required');
+    }
+
+    // Validar que sea un UUID válido
+    if (!isUUID(budgetId)) {
+      throw new BadRequestException('Budget ID must be a valid UUID');
     }
 
     try {
