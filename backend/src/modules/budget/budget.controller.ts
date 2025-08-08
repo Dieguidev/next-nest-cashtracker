@@ -4,12 +4,15 @@ import {
   Post,
   Body,
   Patch,
-  Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { BudgetExistsGuard } from './guards/budget-exists.guard';
+import { GetBudget } from './decorators/get-budget.decorator';
+import { BudgetEntity } from './entities/budget.entity';
 
 @Controller('budget')
 export class BudgetController {
@@ -26,17 +29,23 @@ export class BudgetController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.budgetService.findOne(+id);
+  @UseGuards(BudgetExistsGuard)
+  findOne(@GetBudget() budget: BudgetEntity) {
+    return { success: true, data: budget };
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBudgetDto: UpdateBudgetDto) {
-    return this.budgetService.update(+id, updateBudgetDto);
+  @UseGuards(BudgetExistsGuard)
+  update(
+    @GetBudget() budget: BudgetEntity,
+    @Body() updateBudgetDto: UpdateBudgetDto,
+  ) {
+    return this.budgetService.update(budget.id, updateBudgetDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.budgetService.remove(+id);
+  @UseGuards(BudgetExistsGuard)
+  remove(@GetBudget() budget: BudgetEntity) {
+    return this.budgetService.remove(budget.id);
   }
 }

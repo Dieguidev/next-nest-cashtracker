@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateBudgetDto } from '../dto/create-budget.dto';
 import { BudgetEntity } from '../entities/budget.entity';
@@ -18,7 +18,7 @@ export class CreateBudgetUseCase {
       });
       return { success: true, data: budget };
     } catch (error) {
-      return { success: false, error: error.message || 'Database error' };
+      throw new InternalServerErrorException(error.message || 'Database error');
     }
   }
 }
