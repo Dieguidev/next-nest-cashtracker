@@ -41,8 +41,9 @@ export class BudgetController {
   }
 
   @Get()
-  findAll() {
-    return this.budgetService.findAll();
+  @Auth()
+  findAll(@GetUser() user: User) {
+    return this.budgetService.findAll(user.id);
   }
 
   @Get(':id')

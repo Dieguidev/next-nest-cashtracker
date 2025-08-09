@@ -6,6 +6,7 @@ import { GetAllBudgetUseCase } from './use-cases/get-all-budget.use-case';
 
 import { UpdateBudgetByIdUseCase } from './use-cases/update-budget-by-id.use-case';
 import { DeleteBudgetByIdUseCase } from './use-cases/delete-budget-by-id.use-case';
+import { User } from '../auth/entities/user.entity';
 
 @Injectable()
 export class BudgetService {
@@ -19,8 +20,8 @@ export class BudgetService {
     return this.createBudgetUseCase.execute(createBudgetDto, userId);
   }
 
-  findAll() {
-    return this.getAllBudgetUseCase.execute();
+  findAll(userId: User['id']) {
+    return this.getAllBudgetUseCase.execute(userId);
   }
 
   async update(id: string, updateBudgetDto: UpdateBudgetDto) {
