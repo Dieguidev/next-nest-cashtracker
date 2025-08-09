@@ -35,7 +35,9 @@ export class BudgetExistsGuard implements CanActivate {
       });
 
       if (!budgetData) {
-        throw new BadRequestException(`Budget with ID ${budgetId} not found`);
+        throw new BadRequestException(
+          `Budget with ID ${budgetId} does not exist or does not belong to the authenticated user.`,
+        );
       }
 
       // Convertimos los datos de Prisma a BudgetEntity usando el método fromPrisma
