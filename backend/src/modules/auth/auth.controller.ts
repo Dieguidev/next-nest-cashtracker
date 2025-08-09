@@ -15,21 +15,25 @@ import { AuthGuard } from '@nestjs/passport';
 import { User } from './entities/user.entity';
 import { GetUser } from './decorators/get-user.decorator';
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('register')
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.authService.create(createUserDto);
   }
 
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Post('login')
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
 
+  @Throttle({ default: { limit: 3, ttl: 60000 } })
   @Post('confirm-account')
   confirmAccount(@Body() confirmAccountDto: ConfirmAccountDto) {
     return this.authService.confirmAccount(confirmAccountDto);
