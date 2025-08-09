@@ -48,12 +48,14 @@ export class BudgetController {
 
   @Get(':id')
   @UseGuards(BudgetExistsGuard)
+  @Auth()
   findOne(@GetBudget() budget: BudgetEntity) {
     return { success: true, data: budget };
   }
 
   @Patch(':id')
   @UseGuards(BudgetExistsGuard)
+  @Auth()
   update(
     @GetBudget() budget: BudgetEntity,
     @Body() updateBudgetDto: UpdateBudgetDto,
@@ -63,6 +65,7 @@ export class BudgetController {
 
   @Delete(':id')
   @UseGuards(BudgetExistsGuard)
+  @Auth()
   remove(@GetBudget() budget: BudgetEntity) {
     return this.budgetService.remove(budget.id);
   }

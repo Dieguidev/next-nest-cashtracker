@@ -15,6 +15,7 @@ export class BudgetExistsGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const budgetId = request.params.id;
+    const userId = request.user.id;
 
     if (!budgetId) {
       throw new BadRequestException('Budget ID is required');
@@ -27,7 +28,7 @@ export class BudgetExistsGuard implements CanActivate {
 
     try {
       const budgetData = await this.prisma.budget.findUnique({
-        where: { id: budgetId },
+        where: { id: budgetId, userId },
         include: {
           expenses: true, // Incluimos las expenses si es necesario
         },
