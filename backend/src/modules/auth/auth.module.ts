@@ -13,6 +13,8 @@ import {
 } from './use-cases';
 
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { EmailModule } from '../email/email.module';
+import { ConfirmAccountUseCase } from './use-cases/confirm-account.use-case';
 
 @Module({
   controllers: [AuthController],
@@ -23,9 +25,11 @@ import { PrismaModule } from 'src/prisma/prisma.module';
     CreateUserUseCase,
     LoginUserUseCase,
     GoogleAuthUseCase,
+    ConfirmAccountUseCase,
   ],
   imports: [
     // ConfigModule,
+    EmailModule,
     PrismaModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({

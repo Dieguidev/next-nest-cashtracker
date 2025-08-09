@@ -9,6 +9,8 @@ import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../../../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { generateSixDigitToken } from 'src/utils/generateSixDigitToken';
+import { SendVerificationEmailUseCase } from 'src/modules/email/use-cases';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -17,25 +19,41 @@ export class CreateUserUseCase {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly jwtService: JwtService,
+    private readonly sendVerificationEmailUseCase: SendVerificationEmailUseCase,
   ) {}
 
   async execute(createUserDto: CreateUserDto) {
     try {
       const { password, ...userData } = createUserDto;
 
+      const verificationToken = generateSixDigitToken();
+
       const user = await this.prismaService.user.create({
         data: {
           ...userData,
           password: bcrypt.hashSync(password, 10),
+          token: verificationToken,
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          createdAt: true,
+          updatedAt: true,
         },
       });
 
       // Remover password antes de retornar
-      const { password: _, ...userWithoutPassword } = user;
-      void _; // Ignorar variable no usada
+      // const { password: _, ...userWithoutPassword } = user;
+      // void _; // Ignorar variable no usada
+      await this.sendVerificationEmailUseCase.execute(
+        user.name,
+        user.email,
+        verificationToken,
+      );
 
       return {
-        ...userWithoutPassword,
+        user,
         token: this.getJwtToken({ id: user.id }),
       };
     } catch (error) {
@@ -57,9 +75,9 @@ export class CreateUserUseCase {
         throw new BadRequestException('Email already exists');
       }
 
-      if (target?.includes('slug')) {
-        throw new BadRequestException('Slug already exists');
-      }
+      // if (target?.includes('slug')) {
+      //   throw new BadRequestException('Slug already exists');
+      // }
 
       throw new BadRequestException('Unique constraint violation');
     }

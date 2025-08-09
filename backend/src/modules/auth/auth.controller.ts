@@ -14,6 +14,7 @@ import { Auth } from './decorators/auth.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from './entities/user.entity';
 import { GetUser } from './decorators/get-user.decorator';
+import { ConfirmAccountDto } from './dto/confirm-account.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,11 @@ export class AuthController {
   @Post('login')
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
+  }
+
+  @Post('confirm-account')
+  confirmAccount(@Body() confirmAccountDto: ConfirmAccountDto) {
+    return this.authService.confirmAccount(confirmAccountDto);
   }
 
   @Get('profile')
