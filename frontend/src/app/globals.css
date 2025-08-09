@@ -24,3 +24,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* La imagen solo aparece en pantallas grandes */
+@media (min-width: 1024px) {
+  .bg-auth {
+    background-image: url('/grafico.svg');
+    background-size: 30rem;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+  }
+}
