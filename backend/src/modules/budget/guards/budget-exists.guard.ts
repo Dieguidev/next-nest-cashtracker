@@ -6,7 +6,6 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { BudgetEntity } from '../entities/budget.entity';
 import { validate as isUUID } from 'uuid';
 
 @Injectable()
@@ -29,6 +28,9 @@ export class BudgetExistsGuard implements CanActivate {
     try {
       const budgetData = await this.prisma.budget.findUnique({
         where: { id: budgetId },
+        include: {
+          expenses: true, // Incluimos las expenses si es necesario
+        },
       });
 
       if (!budgetData) {
@@ -36,10 +38,9 @@ export class BudgetExistsGuard implements CanActivate {
       }
 
       // Convertimos los datos de Prisma a BudgetEntity usando el método fromPrisma
-      const budget = BudgetEntity.fromPrisma(budgetData);
 
       // Agregamos el budget al request para que esté disponible en el controlador
-      request.budget = budget;
+      request.budget = budgetData;
       return true;
     } catch (error) {
       // Si es una excepción de NestJS, la re-lanzamos

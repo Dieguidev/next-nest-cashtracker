@@ -1,9 +1,12 @@
+import { ExpenseEntity } from './expense.entity';
+
 export class BudgetEntity {
   id: string;
   name: string;
   amount: number;
   createdAt: Date;
   updatedAt: Date;
+  expenses: ExpenseEntity[];
 
   static fromPrisma(data: Record<string, any>): BudgetEntity {
     const budget = new BudgetEntity();
