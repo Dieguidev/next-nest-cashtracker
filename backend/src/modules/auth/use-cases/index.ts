@@ -1,3 +1,6 @@
 export { CreateUserUseCase } from './create-user.use-case';
 export { LoginUserUseCase } from './login-user.use-case';
 export { GoogleAuthUseCase } from './google-auth.use-case';
+export * from './forgot-password.use-case';
+export * from './confirm-account.use-case';
+export * from './validate-token.use-case';
