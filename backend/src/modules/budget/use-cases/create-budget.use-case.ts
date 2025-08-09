@@ -6,10 +6,13 @@ import { CreateBudgetDto } from '../dto/create-budget.dto';
 export class CreateBudgetUseCase {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(createBudgetDto: CreateBudgetDto) {
+  async execute(createBudgetDto: CreateBudgetDto, userId: string) {
     try {
       const budget = await this.prisma.budget.create({
-        data: createBudgetDto,
+        data: {
+          ...createBudgetDto,
+          userId,
+        },
       });
       return { success: true, data: budget };
     } catch (error) {

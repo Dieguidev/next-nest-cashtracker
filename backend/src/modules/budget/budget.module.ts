@@ -11,6 +11,7 @@ import { BudgetExistsGuard } from './guards/budget-exists.guard';
 import { CreateExpenseUseCase } from './use-cases/create-expense.use-case';
 import { UpdateExpenseUseCase } from './use-cases/update-expense.use-case';
 import { DeleteExpenseUseCase } from './use-cases/delete-expense.use-case';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   controllers: [BudgetController],
@@ -25,6 +26,6 @@ import { DeleteExpenseUseCase } from './use-cases/delete-expense.use-case';
     UpdateExpenseUseCase,
     DeleteExpenseUseCase,
   ],
-  imports: [PrismaModule],
+  imports: [PrismaModule, AuthModule],
 })
 export class BudgetModule {}

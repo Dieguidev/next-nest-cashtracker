@@ -19,6 +19,9 @@ model Budget {
   name   String @db.VarChar(100)
   amount Float
 
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   expenses  Expense[]
@@ -34,4 +37,18 @@ model Expense {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model User {
+  id        String  @id @default(uuid())
+  name      String  @db.VarChar(50)
+  password  String  @db.VarChar(60)
+  email     String  @unique @db.VarChar(50)
+  token     String? @db.VarChar(6)
+  confirmed Boolean @default(false)
+  isActive  Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  budgets   Budget[]
 }

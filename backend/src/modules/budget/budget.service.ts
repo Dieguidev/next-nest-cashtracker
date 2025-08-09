@@ -15,8 +15,8 @@ export class BudgetService {
     private readonly updateBudgetByIdUseCase: UpdateBudgetByIdUseCase,
     private readonly deleteBudgetByIdUseCase: DeleteBudgetByIdUseCase,
   ) {}
-  create(createBudgetDto: CreateBudgetDto) {
-    return this.createBudgetUseCase.execute(createBudgetDto);
+  create(createBudgetDto: CreateBudgetDto, userId: string) {
+    return this.createBudgetUseCase.execute(createBudgetDto, userId);
   }
 
   findAll() {

@@ -21,6 +21,9 @@ import { GetExpense } from './decorators/get-expense.decorator';
 import { ExpenseEntity } from './entities/expense.entity';
 import { UpdateExpenseUseCase } from './use-cases/update-expense.use-case';
 import { DeleteExpenseUseCase } from './use-cases/delete-expense.use-case';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { User } from '../auth/entities/user.entity';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 
 @Controller('budget')
 export class BudgetController {
@@ -32,8 +35,9 @@ export class BudgetController {
   ) {}
 
   @Post()
-  create(@Body() createBudgetDto: CreateBudgetDto) {
-    return this.budgetService.create(createBudgetDto);
+  @Auth()
+  create(@Body() createBudgetDto: CreateBudgetDto, @GetUser() user: User) {
+    return this.budgetService.create(createBudgetDto, user.id);
   }
 
   @Get()
