@@ -7,6 +7,7 @@ import {
   Req,
   Res,
   HttpCode,
+  Param,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,7 +19,8 @@ import { GetUser } from './decorators/get-user.decorator';
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
 import { Throttle } from '@nestjs/throttler';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { ValidateTokenDto } from './dto';
+import { ResetPasswordDto, ValidateTokenDto } from './dto';
+import { TokenValidationPipe } from './pipes/token-validation.pipe';
 
 @Controller('auth')
 export class AuthController {
@@ -60,6 +62,15 @@ export class AuthController {
   @HttpCode(200)
   validateToken(@Body() validateTokenDto: ValidateTokenDto) {
     return this.authService.validateToken(validateTokenDto);
+  }
+
+  @Post('reset-password/:token')
+  @HttpCode(200)
+  resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+    @Param('token', TokenValidationPipe) token: string,
+  ) {
+    return this.authService.resetPassword(resetPasswordDto, token);
   }
 
   @Get('private')

@@ -4,3 +4,4 @@ export { GoogleAuthUseCase } from './google-auth.use-case';
 export * from './forgot-password.use-case';
 export * from './confirm-account.use-case';
 export * from './validate-token.use-case';
+export * from './reset-password.use-case';
