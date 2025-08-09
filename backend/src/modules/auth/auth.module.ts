@@ -13,6 +13,7 @@ import {
   ForgotPasswordUseCase,
   ValidateTokenUseCase,
   ResetPasswordUseCase,
+  UpdatePasswordUseCase,
 } from './use-cases';
 
 import { PrismaModule } from 'src/prisma/prisma.module';
@@ -32,6 +33,7 @@ import { ConfirmAccountUseCase } from './use-cases/confirm-account.use-case';
     ForgotPasswordUseCase,
     ValidateTokenUseCase,
     ResetPasswordUseCase,
+    UpdatePasswordUseCase,
   ],
   imports: [
     // ConfigModule,
