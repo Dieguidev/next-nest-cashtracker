@@ -9,6 +9,8 @@ import { UpdateBudgetByIdUseCase } from './use-cases/update-budget-by-id.use-cas
 import { DeleteBudgetByIdUseCase } from './use-cases/delete-budget-by-id.use-case';
 import { BudgetExistsGuard } from './guards/budget-exists.guard';
 import { CreateExpenseUseCase } from './use-cases/create-expense.use-case';
+import { UpdateExpenseUseCase } from './use-cases/update-expense.use-case';
+import { DeleteExpenseUseCase } from './use-cases/delete-expense.use-case';
 
 @Module({
   controllers: [BudgetController],
@@ -20,6 +22,8 @@ import { CreateExpenseUseCase } from './use-cases/create-expense.use-case';
     DeleteBudgetByIdUseCase,
     BudgetExistsGuard,
     CreateExpenseUseCase,
+    UpdateExpenseUseCase,
+    DeleteExpenseUseCase,
   ],
   imports: [PrismaModule],
 })

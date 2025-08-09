@@ -6,7 +6,6 @@ import {
   Patch,
   Delete,
   UseGuards,
-  Param,
 } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { CreateBudgetDto } from './dto/create-budget.dto';
@@ -20,12 +19,16 @@ import { ExpenseExistsGuard } from './guards/expense-exsits.guard';
 import { CreateExpenseUseCase } from './use-cases/create-expense.use-case';
 import { GetExpense } from './decorators/get-expense.decorator';
 import { ExpenseEntity } from './entities/expense.entity';
+import { UpdateExpenseUseCase } from './use-cases/update-expense.use-case';
+import { DeleteExpenseUseCase } from './use-cases/delete-expense.use-case';
 
 @Controller('budget')
 export class BudgetController {
   constructor(
     private readonly budgetService: BudgetService,
     private readonly createExpenseUseCase: CreateExpenseUseCase,
+    private readonly updateExpenseUseCase: UpdateExpenseUseCase,
+    private readonly deleteExpenseUseCase: DeleteExpenseUseCase,
   ) {}
 
   @Post()
@@ -77,19 +80,17 @@ export class BudgetController {
   }
 
   @Patch(':id/expenses/:expenseId')
+  @UseGuards(BudgetExistsGuard, ExpenseExistsGuard)
   updateExpense(
-    @GetBudget() budget: BudgetEntity,
-    @Param('expenseId') expenseId: string,
+    @GetExpense() expense: ExpenseEntity,
     @Body() updateExpenseDto: UpdateExpenseDto,
   ) {
-    // return this.budgetService.updateExpense(budget.id, expenseId, updateExpenseDto);
+    return this.updateExpenseUseCase.execute(expense.id, updateExpenseDto);
   }
 
   @Delete(':id/expenses/:expenseId')
-  removeExpense(
-    @GetBudget() budget: BudgetEntity,
-    @Param('expenseId') expenseId: string,
-  ) {
-    // return this.budgetService.removeExpense(budget.id, expenseId);
+  @UseGuards(BudgetExistsGuard, ExpenseExistsGuard)
+  removeExpense(@GetExpense() expense: ExpenseEntity) {
+    return this.deleteExpenseUseCase.execute(expense.id);
   }
 }

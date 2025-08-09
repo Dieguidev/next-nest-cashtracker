@@ -29,6 +29,10 @@ export class ExpenseExistsGuard implements CanActivate {
       const expense = await this.prisma.expense.findUnique({
         where: { id: expenseId, budgetId },
       });
+
+      if (!expense) {
+        throw new BadRequestException(`Expense with ID ${expenseId} not found`);
+      }
       request.expense = expense;
       return true;
     } catch (error) {
