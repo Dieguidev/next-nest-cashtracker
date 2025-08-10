@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
+import { ToastNotification } from "@/components";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -32,7 +32,7 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-      <Toaster position="top-right" />
+      <ToastNotification />
     </>
   );
 }

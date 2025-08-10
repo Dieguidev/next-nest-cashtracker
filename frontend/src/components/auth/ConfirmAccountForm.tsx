@@ -1,9 +1,15 @@
 'use client'
 
+import { confirmAccountAction } from "@/actions"
 import { PinInput, PinInputField } from "@chakra-ui/pin-input"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { toast } from "react-toastify"
+// import { toast } from "sonner"
 
 export const ConfirmAccountForm = () => {
+
+  const router = useRouter();
 
   const [token, setToken] = useState("")
 
@@ -11,8 +17,19 @@ export const ConfirmAccountForm = () => {
     setToken(token);
   }
 
-  const handleComplete = (token: string) => {
-    console.log("Token complete:", token);
+  const handleComplete = async (token: string) => {
+    const res = await confirmAccountAction({ token });
+    if (res.success) {
+      toast.success(res.message, {
+        onClose: () => {
+          router.push("/auth/login");
+        }
+      });
+      setToken("");
+    } else {
+      toast.error(res.message);
+      setToken("");
+    }
   }
 
   return (
