@@ -1,13 +1,14 @@
 import { verifySession } from "@/authentication/dal";
-import { Logo, ToastNotification } from "@/components";
+import { AdminMenu, Logo, ToastNotification } from "@/components";
 import Link from "next/link";
+import { User } from "../interface";
 
 export default async function AdminLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  await verifySession();
+  const user: User = await verifySession();
   return (
     <>
       <header className='bg-purple-950 py-5'>
@@ -17,6 +18,8 @@ export default async function AdminLayout({
               <Logo />
             </Link>
           </div>
+
+          <AdminMenu user={user} />
         </div>
       </header>
       <section className='max-w-5xl mx-auto mt-20 p-3 py-10'>

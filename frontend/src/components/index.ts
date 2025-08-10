@@ -6,3 +6,5 @@ export * from "./auth/ConfirmAccountForm";
 export * from "./ui/Logo";
 export * from "./ui/ErrorMessage";
 export * from "./ui/ToastNotification";
+
+export * from "./admin/AdminMenu";
