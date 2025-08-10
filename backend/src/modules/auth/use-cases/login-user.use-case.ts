@@ -1,5 +1,5 @@
 import {
-  ForbiddenException,
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   UnauthorizedException,
@@ -27,10 +27,10 @@ export class LoginUserUseCase {
 
       if (!user) throw new UnauthorizedException('Credentials are not valid');
 
-      if (!user.confirmed) throw new ForbiddenException('Email not confirmed');
-
       if (!bcrypt.compareSync(password, user.password))
         throw new UnauthorizedException('Credentials are not valid');
+
+      if (!user.confirmed) throw new ConflictException('Email not confirmed');
 
       // Remover password antes de retornar
       const { password: _, ...userWithoutPassword } = user;
@@ -44,7 +44,7 @@ export class LoginUserUseCase {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      if (error instanceof ForbiddenException) {
+      if (error instanceof ConflictException) {
         throw error;
       }
       throw new InternalServerErrorException('Error processing login request');

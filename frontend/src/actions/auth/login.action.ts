@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 interface LoginActionData {
   email: string;
   password: string;
@@ -41,6 +43,15 @@ export async function loginAction(formData: LoginActionData) {
         };
       }
 
+      if (response.status === 409) {
+        return {
+          success: false,
+          message: "Email no confirmado.",
+          user: {},
+          errorType: "email_not_confirmed",
+        };
+      }
+
       return {
         success: false,
         message: data.message
@@ -51,14 +62,23 @@ export async function loginAction(formData: LoginActionData) {
       };
     }
 
+    const cookieStore = await cookies();
+
+    cookieStore.set({
+      name: "CASHTRACKER_TOKEN",
+      value: data.token,
+      httpOnly: true,
+      path: "/",
+    });
+
     return {
       success: true,
-      message: "Cuenta confirmada exitosamente.",
+      message: "Inicio de sesión exitoso.",
       user: data.user,
       errorType: null,
     };
   } catch (error) {
-    console.error("Registration failed:", error);
+    console.error("Login failed:", error);
     return {
       success: false,
       message: "Error inesperado. Por favor, intenta más tarde.",
