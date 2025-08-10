@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -15,12 +17,14 @@ export const verifySession = async () => {
     },
   });
 
+  if (!res.ok) {
+    redirect("/auth/login");
+  }
+
   const session = await res.json();
   if (!session) {
     redirect("/auth/login");
   }
-
-  console.log(session);
 
   return session;
 };

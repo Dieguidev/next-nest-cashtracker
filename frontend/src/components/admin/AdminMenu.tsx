@@ -5,6 +5,7 @@ import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/re
 import { Bars3Icon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { User } from '@/app/interface'
+import { logoutAction } from '@/actions'
 
 interface AdminMenuProps {
   user: User;
@@ -40,7 +41,9 @@ export const AdminMenu = ({ user }: AdminMenuProps) => {
             <button
               className='block p-2 hover:text-purple-950'
               type='button'
-              onClick={() => { }}
+              onClick={async () => {
+                await logoutAction()
+              }}
             >
               Cerrar Sesión
             </button>

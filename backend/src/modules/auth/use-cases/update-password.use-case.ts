@@ -16,8 +16,6 @@ export class UpdatePasswordUseCase {
   async execute(user: User, updatePasswordDto: UpdatePasswordDto) {
     const { currentPassword, newPassword, confirmNewPassword } =
       updatePasswordDto;
-    console.log(currentPassword, newPassword, confirmNewPassword);
-    console.log(user);
 
     if (newPassword !== confirmNewPassword) {
       throw new BadRequestException(
@@ -39,7 +37,6 @@ export class UpdatePasswordUseCase {
         throw new UnauthorizedException('Credentials are not valid');
 
       const hashedPassword = bcrypt.hashSync(newPassword, 10);
-      console.log(hashedPassword);
 
       await this.prisma.user.update({
         where: { id: user.id },
