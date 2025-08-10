@@ -4,3 +4,4 @@ export * from "./auth/ForgotPasswordForm";
 
 export * from "./ui/Logo";
 export * from "./ui/ErrorMessage";
+export * from "./auth/ConfirmAccountForm";
