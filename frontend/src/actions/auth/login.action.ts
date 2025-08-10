@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 interface LoginActionData {
   email: string;
@@ -71,12 +72,12 @@ export async function loginAction(formData: LoginActionData) {
       path: "/",
     });
 
-    return {
-      success: true,
-      message: "Inicio de sesión exitoso.",
-      user: data.user,
-      errorType: null,
-    };
+    // return {
+    //   success: true,
+    //   message: "Inicio de sesión exitoso.",
+    //   user: data.user,
+    //   errorType: null,
+    // };
   } catch (error) {
     console.error("Login failed:", error);
     return {
@@ -86,4 +87,7 @@ export async function loginAction(formData: LoginActionData) {
       errorType: "network",
     };
   }
+
+  // El redirect debe estar fuera del try-catch
+  redirect("/admin");
 }

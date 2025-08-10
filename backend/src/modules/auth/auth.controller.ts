@@ -50,7 +50,11 @@ export class AuthController {
   @Get('profile')
   @Auth()
   getUser(@GetUser() user: User) {
-    return user;
+    // Exclude sensitive information from the user object
+    const { password: _, ...result } = user;
+    void _;
+
+    return result;
   }
 
   @Post('forgot-password')

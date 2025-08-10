@@ -21,7 +21,7 @@ export const LoginForm = () => {
   }
 
   const {
-    reset,
+    // reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -36,12 +36,12 @@ export const LoginForm = () => {
       return
     }
 
-    toast.success(res.message, {
-      onClose: () => {
-        reset();
-        setIsLoading(false);
-      }
-    });
+    // toast.success(res.message, {
+    //   onClose: () => {
+    //     reset();
+    //     setIsLoading(false);
+    //   }
+    // });
   }
 
   return (
