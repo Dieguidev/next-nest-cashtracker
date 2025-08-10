@@ -21,7 +21,7 @@ export class SendVerificationEmailUseCase {
         </div>
         <p style="color: #555;">Accede a la página de verificación en el siguiente enlace:</p>
         <p style="word-break: break-word; color: #007bff; text-align: center;">
-          <a href="${envs.frontendUrl}/verify" style="text-decoration: none; color: #007bff;">${envs.frontendUrl}/verify</a>
+          <a href="${envs.frontendUrl}/auth/confirm-account" style="text-decoration: none; color: #007bff;">${envs.frontendUrl}/auth/confirm-account</a>
         </p>
         <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
         <p style="color: #999; font-size: 12px; text-align: center;">
