@@ -31,8 +31,8 @@ export class ForgotPasswordUseCase {
       const newToken = generateSixDigitToken();
 
       await this.sendPasswordResetEmailUseCase.execute(
-        user.name,
         user.email,
+        user.name,
         newToken,
       );
       await this.prisma.user.update({

@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
-import { User } from '@/app/interface'
+import { User } from '@/interface'
 import { logoutAction } from '@/actions'
 
 interface AdminMenuProps {
