@@ -7,6 +7,8 @@ import { ToastContainer } from "react-toastify"
 
 export const ToastNotification = () => {
   return (
-    <ToastContainer />
+    <ToastContainer
+      autoClose={3000}
+    />
   )
 }

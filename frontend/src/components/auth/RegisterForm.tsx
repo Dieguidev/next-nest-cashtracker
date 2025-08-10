@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { ErrorMessage } from "../ui/ErrorMessage"
 import { useState } from "react"
 import { createAccountAction } from "@/actions"
-import { toast } from "sonner"
+import { toast } from "react-toastify"
 
 type FormInputs = {
   email: string
