@@ -1,7 +1,7 @@
 import { verifySession } from "@/authentication/dal";
 import { AdminMenu, Logo, ToastNotification } from "@/components";
 import Link from "next/link";
-import { User } from "../interface";
+import { User } from "../../interface";
 
 export default async function AdminLayout({
   children
