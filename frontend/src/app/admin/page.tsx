@@ -1,5 +1,11 @@
 
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Administración",
+  description: "Página de administración para acceder a CashTracker",
+};
 
 export default async function AdminPage() {
 

@@ -1,8 +1,10 @@
-import { PasswordResetHandler } from "@/components";
+
+import { PasswordResetHandler } from '@/components';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Iniciar sesión",
-  description: "Página de inicio de sesión para acceder a CashTracker",
+  title: "Reestablecer contraseña",
+  description: "Página para reestablecer la contraseña en CashTracker",
 };
 
 export default function NewPasswordPage() {
