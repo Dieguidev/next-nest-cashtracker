@@ -20,12 +20,11 @@ export const ConfirmAccountForm = () => {
   const handleComplete = async (token: string) => {
     const res = await confirmAccountAction({ token });
     if (res.success) {
-      toast.success(res.message, {
-        onClose: () => {
-          router.push("/auth/login");
-        }
-      });
+      toast.success(res.message);
       setToken("");
+      // Redirigir después del autoClose de 3 segundos
+      router.push("/auth/login");
+
     } else {
       toast.error(res.message);
       setToken("");
