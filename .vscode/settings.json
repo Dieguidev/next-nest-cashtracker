@@ -1,0 +1,129 @@
+{
+  // === OPTIMIZACIONES PARA MONOREPO ===
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/generated": true,
+    "**/postgres": true,
+    "**/.turbo": true,
+    "**/coverage": true,
+    "**/.nyc_output": true,
+    "**/build": true,
+    "**/*.log": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/generated": true,
+    "**/postgres": true,
+    "**/.turbo": true,
+    "**/coverage": true,
+    "**/build": true,
+    "**/*.log": true,
+    "**/package-lock.json": true,
+    "**/yarn.lock": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/generated/**": true,
+    "**/postgres/**": true,
+    "**/.turbo/**": true,
+    "**/coverage/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true
+  },
+
+  // === OPTIMIZACIONES TYPESCRIPT ===
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.disableAutomaticTypeAcquisition": false,
+  "typescript.format.enable": true,
+  "typescript.validate.enable": true,
+  "typescript.workspaceSymbols.scope": "allOpenProjects",
+
+  // === OPTIMIZACIONES ESLINT ===
+  "eslint.workingDirectories": [
+    "frontend",
+    "backend"
+  ],
+  "eslint.format.enable": false,
+  "eslint.run": "onSave",
+  "eslint.codeAction.showDocumentation": {
+    "enable": false
+  },
+
+  // === OPTIMIZACIONES EDITOR ===
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": false,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.parameterHints.enabled": true,
+  "editor.hover.delay": 300,
+
+  // === OPTIMIZACIONES PRETTIER ===
+  "prettier.requireConfig": true,
+  "prettier.enableDebugLogs": false,
+
+  // === OPTIMIZACIONES GIT ===
+  "git.autofetch": false,
+  "git.autorefresh": false,
+  "git.decorations.enabled": false,
+  "gitlens.codeLens.enabled": false,
+  "gitlens.hovers.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.statusBar.enabled": false,
+
+  // === OPTIMIZACIONES GENERALES ===
+  "files.autoSave": "onWindowChange",
+  "files.autoSaveDelay": 5000,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.showTabs": "multiple",
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 8,
+  "workbench.editor.limit.perEditorGroup": true,
+  "workbench.startupEditor": "none",
+  "explorer.autoReveal": false,
+  "explorer.incrementalNaming": "smart",
+
+  // === OPTIMIZACIONES TERMINAL ===
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.profiles.windows": {
+    "Command Prompt": {
+      "path": "cmd.exe"
+    }
+  },
+  "terminal.integrated.persistentSessionReviveProcess": "never",
+
+  // === DESACTIVAR TELEMETRÍA ===
+  "telemetry.telemetryLevel": "off",
+  "npm.fetchOnlinePackageInfo": false,
+
+  // === OPTIMIZACIONES PRISMA ===
+  "prisma.showPrismaDataPlatformNotification": false,
+  
+  // === OPTIMIZACIONES NEXT.JS ===
+  "next.telemetry.disabled": true,
+
+  // === OPTIMIZACIONES EXTENSIONES ===
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false
+}
