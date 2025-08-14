@@ -1,4 +1,5 @@
 import { getBudgetByIdAction } from "@/actions";
+import { UpdateBudgetForm } from "@/components";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -33,7 +34,7 @@ export default async function EditBudgetPage({ params }: EditBudgetPageProps) {
         </Link>
       </div>
       <div className='p-10 mt-10  shadow-lg  '>
-
+        <UpdateBudgetForm budget={budget} />
       </div>
     </>
   );

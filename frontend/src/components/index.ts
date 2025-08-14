@@ -14,4 +14,5 @@ export * from "./admin/AdminMenu";
 export * from './admin/budget/CreateBudgetForm';
 export * from './admin/budget/BudgetMenu'
 export * from './admin/budget/BudgetForm'
+export * from './admin/budget/UpdateBudgetForm'
 

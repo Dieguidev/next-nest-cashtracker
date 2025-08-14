@@ -1,30 +1,31 @@
 'use client'
 
-import { createBudgetAction } from "@/actions"
-import { useRouter } from "next/navigation"
+import { Budget } from "@/interface"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { toast } from "react-toastify"
 import { BudgetForm } from "./BudgetForm"
+import { toast } from "react-toastify"
+import { updateBudgetAction } from "@/actions"
+
+interface UpdateBudgetForm {
+  budget: Budget
+}
 
 type FormInputs = {
   name: string
   amount: string
 }
 
-export const CreateBudgetForm = () => {
-
-  const router = useRouter()
+export const UpdateBudgetForm = ({ budget }: UpdateBudgetForm) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues: FormInputs = {
-    name: "",
-    amount: '',
+    name: budget.name,
+    amount: budget.amount.toString(),
   }
 
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -32,7 +33,8 @@ export const CreateBudgetForm = () => {
 
   const onSubmit = async (data: FormInputs) => {
     setIsLoading(true);
-    const res = await createBudgetAction({
+    const res = await updateBudgetAction({
+      id: budget.id,
       name: data.name,
       amount: parseFloat(data.amount)
     });
@@ -47,11 +49,11 @@ export const CreateBudgetForm = () => {
     toast.success(res.message, {
       autoClose: 3000,
     })
-    reset();
     setIsLoading(false);
-    router.push("/admin");
 
   }
+
+
 
   return (
     <form
@@ -65,7 +67,7 @@ export const CreateBudgetForm = () => {
       />
       <input
         type="submit"
-        value={isLoading ? "Cargando..." : "Crear Presupuesto"}
+        value={isLoading ? "Cargando..." : "Actualizar Presupuesto"}
         className={`bg-amber-500 w-full p-3 text-white uppercase font-bold hover:bg-amber-600 cursor-pointer transition-colors ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
         disabled={isLoading}
       />
