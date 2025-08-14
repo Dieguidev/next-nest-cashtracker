@@ -8,3 +8,4 @@ export * from "./auth/validate-token.action";
 
 export * from './admin/create-budget.action';
 export * from './admin/get-budgets.action'
+export * from './admin/get-budget-by-id.action'

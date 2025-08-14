@@ -1,5 +1,6 @@
 
 import { getAllBudgetsAction } from "@/actions";
+import { BudgetMenu } from "@/components";
 import { formatCurrency, formatDate } from "@/utils";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -55,7 +56,9 @@ export default async function AdminPage() {
                   </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-x-6">
-
+                  <BudgetMenu
+                    budgetId={budget.id}
+                  />
                 </div>
               </li>
             ))}
