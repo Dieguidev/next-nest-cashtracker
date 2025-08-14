@@ -14,8 +14,6 @@ export default async function EditBudgetPage({ params }: EditBudgetPageProps) {
     notFound();
   }
 
-  console.log(budget);
-
   return (
     <>
       <div className='flex flex-col-reverse md:flex-row md:justify-between items-center'>
