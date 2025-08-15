@@ -1,63 +1,111 @@
-'use client'
+"use client";
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import { DialogTitle } from "@headlessui/react"
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { DialogTitle } from "@headlessui/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { deleteBudgetAction } from "@/actions";
+import { toast } from "react-toastify";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
+
+type FormInputs = {
+  password: string;
+};
 
 export const ConsfirmPasswordForm = () => {
-  const pathname = usePathname()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const budgetId = searchParams.get('deleteBudgetId')
-  console.log(budgetId);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const initialValues: FormInputs = {
+    password: "",
+  };
+
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const budgetId = searchParams.get("deleteBudgetId");
+
+  const {
+    // reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInputs>({ defaultValues: initialValues });
 
   const closeModal = () => {
-    const hideModal = new URLSearchParams(searchParams.toString())
-    hideModal.delete('deleteBudgetId')
-    router.replace(`${pathname}?${hideModal}`)
-  }
+    const hideModal = new URLSearchParams(searchParams.toString());
+    hideModal.delete("deleteBudgetId");
+    router.replace(`${pathname}?${hideModal}`);
+  };
+
+  const onSubmit = async (data: FormInputs) => {
+    setIsLoading(true);
+    const res = await deleteBudgetAction({
+      id: budgetId!,
+      password: data.password,
+    });
+    if (!res.success) {
+      toast.error(res.message);
+      setIsLoading(false);
+      return;
+    }
+
+    toast.success(res.message);
+    router.push("/admin/budget");
+    closeModal();
+  };
 
   return (
     <>
-      <DialogTitle
-        as="h3"
-        className="font-black text-4xl text-purple-950 my-5"
-      >
+      <DialogTitle as="h3" className="font-black text-4xl text-purple-950 my-5">
         Eliminar Presupuesto
       </DialogTitle>
-      <p className="text-xl font-bold">Ingresa tu Password para {''}
-        <span className="text-amber-500">eliminar el presupuesto {''}</span>
+      <p className="text-xl font-bold">
+        Ingresa tu Password para {""}
+        <span className="text-amber-500">eliminar el presupuesto {""}</span>
       </p>
-      <p className='text-gray-600 text-sm'>(Un presupuesto eliminado y sus gastos no se pueden recuperar)</p>
+      <p className="text-gray-600 text-sm">
+        (Un presupuesto eliminado y sus gastos no se pueden recuperar)
+      </p>
       <form
         className=" mt-14 space-y-5"
         noValidate
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-5">
-          <label
-            className="font-bold text-2xl"
-            htmlFor="password"
-          >Ingresa tu Password para eliminar</label>
+          <label className="font-bold text-2xl" htmlFor="password">
+            Ingresa tu Password para eliminar
+          </label>
           <input
             id="password"
             type="password"
             placeholder="Password"
             className="w-full border border-gray-300 p-3 rounded-lg"
-            name='password'
+            {...register("password", {
+              required: "La contraseña es requerida",
+              minLength: {
+                value: 6,
+                message: "La contraseña debe tener al menos 6 caracteres",
+              },
+            })}
           />
+          {errors.password && (
+            <ErrorMessage message={errors.password.message} />
+          )}
         </div>
         <div className="grid grid-cols-2 gap-5">
           <input
             type="submit"
-            value='Eliminar Presupuesto'
+            value="Eliminar Presupuesto"
             className="bg-purple-950 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-black cursor-pointer transition-colors"
           />
           <button
             className="bg-amber-500 hover:bg-amber-600 w-full p-3 rounded-lg text-white font-black cursor-pointer transition-colors"
             onClick={closeModal}
-          >Cancelar</button>
+          >
+            Cancelar
+          </button>
         </div>
       </form>
-
     </>
-  )
-}
+  );
+};
