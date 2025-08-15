@@ -7,6 +7,22 @@ interface EditBudgetPageProps {
   params: Promise<{ id: string }>
 }
 
+export async function generateMetadata({ params }: EditBudgetPageProps) {
+  const { id } = await params;
+
+  const { budget } = await getBudgetByIdAction(id);
+  if (!budget) {
+    return {
+      title: 'Presupuesto no encontrado',
+    };
+  }
+
+  return {
+    title: `${budget.name}`,
+    description: `Edita el presupuesto ${budget.name} con los detalles actuales.`,
+  };
+}
+
 export default async function EditBudgetPage({ params }: EditBudgetPageProps) {
   const { id } = await params;
 
