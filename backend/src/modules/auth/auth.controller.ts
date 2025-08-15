@@ -20,7 +20,12 @@ import { GetUser } from './decorators/get-user.decorator';
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
 import { Throttle } from '@nestjs/throttler';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { ResetPasswordDto, UpdatePasswordDto, ValidateTokenDto } from './dto';
+import {
+  ResetPasswordDto,
+  UpdatePasswordDto,
+  ValidatePasswordDto,
+  ValidateTokenDto,
+} from './dto';
 import { TokenValidationPipe } from './pipes/token-validation.pipe';
 
 @Controller('auth')
@@ -86,6 +91,21 @@ export class AuthController {
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
     return this.authService.updatePassword(user, updatePasswordDto);
+  }
+
+  @Post('validate-password')
+  @Auth()
+  @HttpCode(200)
+  validatePassword(
+    @Body() validatePasswordDto: ValidatePasswordDto,
+    @GetUser() user: User,
+  ) {
+    console.log(validatePasswordDto);
+
+    return this.authService.validatePassword(
+      validatePasswordDto,
+      user.password,
+    );
   }
 
   @Get('private')

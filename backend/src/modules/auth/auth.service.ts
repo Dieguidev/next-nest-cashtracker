@@ -11,11 +11,17 @@ import {
   ValidateTokenUseCase,
   ResetPasswordUseCase,
   UpdatePasswordUseCase,
+  ValidatePasswordUseCase,
 } from './use-cases';
 
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { ResetPasswordDto, UpdatePasswordDto, ValidateTokenDto } from './dto';
+import {
+  ResetPasswordDto,
+  UpdatePasswordDto,
+  ValidatePasswordDto,
+  ValidateTokenDto,
+} from './dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -29,6 +35,7 @@ export class AuthService {
     private readonly validateTokenUseCase: ValidateTokenUseCase,
     private readonly resetPasswordUseCase: ResetPasswordUseCase,
     private readonly updatePasswordUseCase: UpdatePasswordUseCase,
+    private readonly validatePasswordUseCase: ValidatePasswordUseCase,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -57,6 +64,16 @@ export class AuthService {
 
   async updatePassword(user: User, updatePasswordDto: UpdatePasswordDto) {
     return this.updatePasswordUseCase.execute(user, updatePasswordDto);
+  }
+
+  validatePassword(
+    validatePasswordDto: ValidatePasswordDto,
+    userPassword: User['password'],
+  ) {
+    return this.validatePasswordUseCase.execute(
+      validatePasswordDto,
+      userPassword,
+    );
   }
 
   async googleAuth(googleUser: GoogleUser) {

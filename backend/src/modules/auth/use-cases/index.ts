@@ -6,3 +6,4 @@ export * from './confirm-account.use-case';
 export * from './validate-token.use-case';
 export * from './reset-password.use-case';
 export * from './update-password.use-case';
+export * from './validate-password.use-case';
