@@ -4,12 +4,16 @@ import Link from "next/link"
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid"
 import { Budget } from "@/interface"
+import { useRouter } from "next/navigation"
 
 interface BudgetMenuProps {
   budgetId: Budget['id']
 }
 
 export const BudgetMenu = ({ budgetId }: BudgetMenuProps) => {
+
+  const router = useRouter()
+
   return (
     <>
       <Menu as="div" className="relative flex-none">
@@ -48,7 +52,7 @@ export const BudgetMenu = ({ budgetId }: BudgetMenuProps) => {
               <button
                 type='button'
                 className='block px-3 py-1 text-sm leading-6 text-red-500'
-                onClick={() => { }}
+                onClick={() => router.push(`?deleteBudgetId=${budgetId}`)}
               >
                 Eliminar Presupuesto
               </button>
