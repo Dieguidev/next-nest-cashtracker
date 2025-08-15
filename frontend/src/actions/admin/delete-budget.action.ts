@@ -47,6 +47,16 @@ export async function deleteBudgetAction(formData: DeleteBudgetActionData) {
         };
       }
 
+      if (response.status >= 500) {
+        return {
+          success: false,
+          message:
+            "No pudimos procesar tu solicitud en este momento. Por favor, intenta más tarde.",
+          budget: {},
+          errorType: "server_error",
+        };
+      }
+
       return {
         success: false,
         message:
@@ -72,6 +82,16 @@ export async function deleteBudgetAction(formData: DeleteBudgetActionData) {
     const deleteData = await deleteResponse.json();
 
     if (!deleteResponse.ok) {
+      if (deleteResponse.status >= 500) {
+        return {
+          success: false,
+          message:
+            "No pudimos eliminar el presupuesto en este momento. Por favor, intenta más tarde.",
+          budget: {},
+          errorType: "server_error",
+        };
+      }
+
       return {
         success: false,
         message: deleteData.message || "Error al eliminar el presupuesto",

@@ -48,6 +48,16 @@ export async function updateBudgetAction(formData: UpdateBudgetActionData) {
         };
       }
 
+      if (response.status >= 500) {
+        return {
+          success: false,
+          message:
+            "No pudimos actualizar el presupuesto en este momento. Por favor, intenta más tarde.",
+          budget: {},
+          errorType: "server_error",
+        };
+      }
+
       return {
         success: false,
         message:
