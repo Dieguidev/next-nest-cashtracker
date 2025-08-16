@@ -1,7 +1,7 @@
 "use server";
 
 import { getToken } from "@/authentication/get-token";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 interface CreateExpenseActionData {
   name: string;
@@ -61,7 +61,7 @@ export async function createExpenseAction(formData: CreateExpenseActionData) {
       };
     }
 
-    revalidatePath("/admin/budgets");
+    revalidateTag(`budget-${budgetId}`);
 
     return {
       success: true,
