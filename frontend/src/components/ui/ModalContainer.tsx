@@ -17,7 +17,11 @@ const componentsMap = {
   DeleteExpense: DeleteExpenseForm,
 };
 
-export const ModalContainer = () => {
+interface ModalContainerProps {
+  budgetId: string;
+}
+
+export const ModalContainer = ({ budgetId }: ModalContainerProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -70,7 +74,9 @@ export const ModalContainer = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <DialogPanel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                  {ComponentToRender ? <ComponentToRender /> : null}
+                  {ComponentToRender ? (
+                    <ComponentToRender budgetId={budgetId} />
+                  ) : null}
                 </DialogPanel>
               </TransitionChild>
             </div>

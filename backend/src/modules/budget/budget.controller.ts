@@ -74,6 +74,7 @@ export class BudgetController {
 
   @Post(':id/expenses')
   @UseGuards(BudgetExistsGuard)
+  @Auth()
   createExpense(
     @GetBudget() budget: BudgetEntity,
     @Body() createExpenseDto: CreateExpenseDto,
@@ -83,12 +84,14 @@ export class BudgetController {
 
   @Get(':id/expenses/:expenseId')
   @UseGuards(BudgetExistsGuard, ExpenseExistsGuard)
+  @Auth()
   findExpense(@GetExpense() expense: ExpenseEntity) {
     return expense;
   }
 
   @Patch(':id/expenses/:expenseId')
   @UseGuards(BudgetExistsGuard, ExpenseExistsGuard)
+  @Auth()
   updateExpense(
     @GetExpense() expense: ExpenseEntity,
     @Body() updateExpenseDto: UpdateExpenseDto,
@@ -98,6 +101,7 @@ export class BudgetController {
 
   @Delete(':id/expenses/:expenseId')
   @UseGuards(BudgetExistsGuard, ExpenseExistsGuard)
+  @Auth()
   removeExpense(@GetExpense() expense: ExpenseEntity) {
     return this.deleteExpenseUseCase.execute(expense.id);
   }

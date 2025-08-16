@@ -44,7 +44,7 @@ export default async function BudgetDetailsPage({
         <AddExpenseButton />
       </div>
 
-      <ModalContainer />
+      <ModalContainer budgetId={id} />
     </>
   );
 }
