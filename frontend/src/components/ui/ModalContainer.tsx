@@ -31,10 +31,12 @@ export const ModalContainer = ({ budgetId }: ModalContainerProps) => {
 
   const addExpense = searchParams.get("addExpense");
   const editExpenseId = searchParams.get("editExpenseId");
+  const deleteExpenseId = searchParams.get("deleteExpenseId");
 
   const getComponentName = () => {
     if (addExpense) return "AddExpense";
     if (editExpenseId) return "EditExpense";
+    if (deleteExpenseId) return "DeleteExpense";
   };
 
   const componentName = getComponentName();
