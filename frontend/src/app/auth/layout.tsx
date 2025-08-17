@@ -1,11 +1,52 @@
 import { Logo } from "@/components";
+import { User } from "@/interface";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
-export default function RootAuthLayout({
+async function checkUserSession() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("CASHTRACKER_TOKEN")?.value;
+
+  if (!token || token.trim() === "") {
+    return null;
+  }
+
+  try {
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/profile`;
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
+
+    if (res.ok) {
+      const user = await res.json();
+      return user && user.id ? user : null;
+    }
+
+    return null;
+  } catch (error) {
+    console.log("Network error verifying token:", error);
+    return null;
+  }
+}
+
+export default async function RootAuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Verificar sesión una sola vez
+  const user = await checkUserSession();
+
+  if (user) {
+    redirect("/admin");
+  }
+
+  console.log("No user session, showing auth layout");
   return (
     <>
       <div className="lg:grid lg:grid-cols-2 lg:min-h-screen">
