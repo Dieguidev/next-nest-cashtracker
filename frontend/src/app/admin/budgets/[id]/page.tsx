@@ -1,5 +1,11 @@
 import { getBudgetByIdAction } from "@/actions";
-import { AddExpenseButton, ExpenseMenu, ModalContainer } from "@/components";
+import {
+  AddExpenseButton,
+  Amount,
+  ExpenseMenu,
+  ModalContainer,
+  ProgressBar,
+} from "@/components";
 import { formatCurrency, formatDate } from "@/utils";
 import { notFound } from "next/navigation";
 
@@ -33,6 +39,14 @@ export default async function BudgetDetailsPage({
     notFound();
   }
 
+  const totalSpent = budget.expenses.reduce(
+    (acc, expense) => acc + expense.amount,
+    0
+  );
+  const available = budget.amount - totalSpent;
+
+  const percentage = ((totalSpent / budget.amount) * 100).toFixed(2);
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -46,6 +60,15 @@ export default async function BudgetDetailsPage({
       </div>
       {budget.expenses.length ? (
         <>
+          <div className="grid grid-cols-1 md:grid-cols-2 mt-10">
+            <ProgressBar percentage={+percentage} />
+            <div className="flex flex-col justify-center items-center md:items-start gap-5">
+              <Amount label="Presupuesto" amount={budget.amount} />
+              <Amount label="Disponible" amount={available} />
+              <Amount label="Gastado" amount={totalSpent} />
+            </div>
+          </div>
+
           <h1 className="font-black text-4xl text-purple-950 mt-10">
             Gastos en este presupuesto
           </h1>
