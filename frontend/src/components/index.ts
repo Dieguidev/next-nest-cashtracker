@@ -29,3 +29,4 @@ export * from "./expenses/ExpenseMenu";
 
 export * from "./profile/ProfileTabs";
 export * from "./profile/ChangePasswordForm";
+export * from "./profile/ProfileForm";

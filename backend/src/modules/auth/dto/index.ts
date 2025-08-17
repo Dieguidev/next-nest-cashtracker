@@ -6,3 +6,4 @@ export * from './/create-user.dto';
 export * from './reset-password.dto';
 export * from './update-password.dto';
 export * from './validate-password.dto';
+export * from './update-user.dto';

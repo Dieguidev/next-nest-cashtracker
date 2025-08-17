@@ -12,6 +12,7 @@ import {
   ResetPasswordUseCase,
   UpdatePasswordUseCase,
   ValidatePasswordUseCase,
+  UpdateUserUseCase,
 } from './use-cases';
 
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
@@ -19,6 +20,7 @@ import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import {
   ResetPasswordDto,
   UpdatePasswordDto,
+  UpdateUserDto,
   ValidatePasswordDto,
   ValidateTokenDto,
 } from './dto';
@@ -36,6 +38,7 @@ export class AuthService {
     private readonly resetPasswordUseCase: ResetPasswordUseCase,
     private readonly updatePasswordUseCase: UpdatePasswordUseCase,
     private readonly validatePasswordUseCase: ValidatePasswordUseCase,
+    private readonly updateUserUseCase: UpdateUserUseCase,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -64,6 +67,10 @@ export class AuthService {
 
   async updatePassword(user: User, updatePasswordDto: UpdatePasswordDto) {
     return this.updatePasswordUseCase.execute(user, updatePasswordDto);
+  }
+
+  async updateUser(userId: User['id'], updateUserDto: UpdateUserDto) {
+    return this.updateUserUseCase.execute(userId, updateUserDto);
   }
 
   validatePassword(

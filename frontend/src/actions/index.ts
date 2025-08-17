@@ -18,3 +18,4 @@ export * from "./expense/update-expense.action";
 export * from "./expense/delete-expense.action";
 
 export * from "./profile/change-password.action";
+export * from "./auth/update-user.action";

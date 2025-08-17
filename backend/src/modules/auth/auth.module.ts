@@ -15,6 +15,7 @@ import {
   ResetPasswordUseCase,
   UpdatePasswordUseCase,
   ValidatePasswordUseCase,
+  UpdateUserUseCase,
 } from './use-cases';
 
 import { PrismaModule } from 'src/prisma/prisma.module';
@@ -36,6 +37,7 @@ import { ConfirmAccountUseCase } from './use-cases/confirm-account.use-case';
     ResetPasswordUseCase,
     UpdatePasswordUseCase,
     ValidatePasswordUseCase,
+    UpdateUserUseCase,
   ],
   imports: [
     // ConfigModule,

@@ -23,6 +23,7 @@ import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import {
   ResetPasswordDto,
   UpdatePasswordDto,
+  UpdateUserDto,
   ValidatePasswordDto,
   ValidateTokenDto,
 } from './dto';
@@ -106,6 +107,13 @@ export class AuthController {
       validatePasswordDto,
       user.password,
     );
+  }
+
+  @Patch('update-user')
+  @Auth()
+  @HttpCode(200)
+  updateUser(@GetUser() user: User, @Body() updateUserDto: UpdateUserDto) {
+    return this.authService.updateUser(user.id, updateUserDto);
   }
 
   @Get('private')
