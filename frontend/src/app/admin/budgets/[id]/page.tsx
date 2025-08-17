@@ -1,5 +1,5 @@
 import { getBudgetByIdAction } from "@/actions";
-import { AddExpenseButton, ModalContainer } from "@/components";
+import { AddExpenseButton, ExpenseMenu, ModalContainer } from "@/components";
 import { formatCurrency, formatDate } from "@/utils";
 import { notFound } from "next/navigation";
 
@@ -52,7 +52,7 @@ export default async function BudgetDetailsPage({
 
           <ul
             role="list"
-            className="divide-y divide-gray-300 border shadow-lg mt-10 "
+            className="divide-y divide-gray-300  shadow-lg mt-10 "
           >
             {budget.expenses.map((expense) => (
               <li key={expense.id} className="flex justify-between gap-x-6 p-5">
@@ -72,6 +72,7 @@ export default async function BudgetDetailsPage({
                     </p>
                   </div>
                 </div>
+                <ExpenseMenu expenseId={expense.id} />
               </li>
             ))}
           </ul>

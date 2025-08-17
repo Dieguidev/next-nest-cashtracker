@@ -30,9 +30,11 @@ export const ModalContainer = ({ budgetId }: ModalContainerProps) => {
   const show = showModal ? true : false;
 
   const addExpense = searchParams.get("addExpense");
+  const editExpenseId = searchParams.get("editExpenseId");
 
   const getComponentName = () => {
     if (addExpense) return "AddExpense";
+    if (editExpenseId) return "EditExpense";
   };
 
   const componentName = getComponentName();
@@ -75,7 +77,10 @@ export const ModalContainer = ({ budgetId }: ModalContainerProps) => {
               >
                 <DialogPanel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
                   {ComponentToRender ? (
-                    <ComponentToRender budgetId={budgetId} />
+                    <ComponentToRender
+                      budgetId={budgetId}
+                      editExpenseId={editExpenseId!}
+                    />
                   ) : null}
                 </DialogPanel>
               </TransitionChild>

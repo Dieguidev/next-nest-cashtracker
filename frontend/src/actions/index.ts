@@ -13,3 +13,5 @@ export * from "./admin/update-budget.action";
 export * from "./admin/delete-budget.action";
 
 export * from "./expense/create-expense.action";
+export * from "./expense/get-expesne.action";
+export * from "./expense/update-expense.action";

@@ -1,33 +1,33 @@
 "use server";
 
 import { getToken } from "@/authentication/get-token";
-import { revalidateTag } from "next/cache";
+import { Expense } from "@/interface";
 
-interface CreateExpenseActionData {
-  name: string;
-  amount: number;
+interface GetExpenseActionData {
+  expenseId: string;
   budgetId: string;
 }
 
-export async function createExpenseAction(formData: CreateExpenseActionData) {
-  const token = await getToken();
+export async function getExpenseAction(formData: GetExpenseActionData) {
+  const { expenseId, budgetId } = formData;
 
-  const { budgetId, ...rest } = formData;
+  const token = await getToken();
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/budget/${budgetId}/expenses`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/budget/${budgetId}/expenses/${expenseId}`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(rest),
+        next: {
+          revalidate: false,
+          tags: [`budget-${budgetId}`],
+        },
       }
     );
-
-    const data = await response.json();
 
     if (!response.ok) {
       // Manejo específico para Too Many Requests (429)
@@ -36,7 +36,7 @@ export async function createExpenseAction(formData: CreateExpenseActionData) {
           success: false,
           message:
             "Has excedido el límite de intentos. Por favor, espera unos minutos antes de intentar nuevamente.",
-          budget: {},
+          expense: {},
           errorType: "rate_limit",
         };
       }
@@ -45,7 +45,7 @@ export async function createExpenseAction(formData: CreateExpenseActionData) {
         return {
           success: false,
           message: "No tienes permiso para realizar esta acción.",
-          budget: {},
+          expense: {},
           errorType: "unauthorized",
         };
       }
@@ -54,17 +54,15 @@ export async function createExpenseAction(formData: CreateExpenseActionData) {
         success: false,
         message:
           "Error en los datos proporcionados. Por favor, verifica e intenta nuevamente.",
-        budget: {},
+        expense: {},
         errorType: "validation",
       };
     }
-
-    revalidateTag(`budget-${budgetId}`);
-
+    const data = await response.json();
     return {
       success: true,
-      message: "El gasto se ha creado correctamente.",
-      budget: data.data,
+      message: "El gasto se ha obtenido correctamente.",
+      expense: data as Expense,
       errorType: null,
     };
   } catch (error) {
@@ -72,7 +70,7 @@ export async function createExpenseAction(formData: CreateExpenseActionData) {
     return {
       success: false,
       message: "Error inesperado. Por favor, intenta más tarde.",
-      budget: {},
+      expense: {},
       errorType: "network",
     };
   }
