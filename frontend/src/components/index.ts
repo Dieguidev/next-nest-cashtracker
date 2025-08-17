@@ -26,3 +26,6 @@ export * from "./expenses/EditExpenseForm";
 export * from "./expenses/DeleteExpenseForm";
 export * from "./expenses/ExpenseForm";
 export * from "./expenses/ExpenseMenu";
+
+export * from "./profile/ProfileTabs";
+export * from "./profile/ChangePasswordForm";

@@ -16,3 +16,5 @@ export * from "./expense/create-expense.action";
 export * from "./expense/get-expesne.action";
 export * from "./expense/update-expense.action";
 export * from "./expense/delete-expense.action";
+
+export * from "./profile/change-password.action";
